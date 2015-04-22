@@ -42,6 +42,7 @@ extends SimpleChannelInboundHandler[Packet] with ClientActor with ManagerSupport
   }
 
   protected def handleMessage(packet: Packet): Unit = {
+    tracker.msgSend(id)
     hub.message(packet.target, packet.copy(target=id))
   }
 
@@ -71,6 +72,7 @@ extends SimpleChannelInboundHandler[Packet] with ClientActor with ManagerSupport
   // handle outgoing packets
   override def message(packet: Packet): Unit = {
     log.debug(s"sending message (target=$id): $packet")
+    tracker.msgRecv(id)
     channel.writeAndFlush(packet)
   }
 

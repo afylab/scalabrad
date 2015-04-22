@@ -37,7 +37,7 @@ class CentralNode(port: Int, password: Array[Char], store: RegistryStore) extend
   // start services
   val tracker = new StatsTrackerImpl
   val hub: Hub = new HubImpl(tracker, () => messager)
-  val messager: Messager = new MessagerImpl(hub)
+  val messager: Messager = new MessagerImpl(hub, tracker)
   val auth: AuthService = new AuthServiceImpl(password)
 
   // Manager gets id 1L
